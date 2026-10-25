@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="麦当劳单品的官方营养数据详情：热量、蛋白质、脂肪、碳水、钠、钙占单人单餐参考值的比例，以及套餐组成与同类对比。" />
+<meta name="theme-color" content="#06090e" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ffc72c'/%3E%3Ctext x='16' y='23' font-size='19' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%2322180a'%3EM%3C/text%3E%3C/svg%3E" />
+<title>单品营养详情 · 食材剖面拆解 | 麦当劳营养配餐助手</title>
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主内容</a>
+
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <div class="brand"><span class="logo">M</span><span>营养配餐助手<small>MCDONALD'S NUTRITION MCP</small></span></div>
+    <nav class="nav-links">
+      <a href="index.html">配餐工作台</a>
+      <a href="results.html">配餐结果</a>
+      <a href="detail.html" class="on">单品详情</a>
+      <a href="dashboard.html">营养仪表盘</a>
+      <a href="loading.html">AI 生成</a>
+      <a href="guide.html">接入说明</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<div class="wrap">
+  <noscript>
+    <div class="holo flat mt-16">当前浏览器已禁用 JavaScript，无法加载单品营养数据，请开启脚本后重试。</div>
+  </noscript>
+
+  <div class="page-head">
+    <span class="eyebrow">INGREDIENT SECTION VIEW</span>
+    <h1 id="mealName">单品营养详情</h1>
+    <p id="mealMeta">—</p>
+  </div>
+
+  <div class="split-detail mt-32">
+
+    <!-- 左：剖面拆解 + 套餐组成 -->
+    <div>
+      <div class="holo flat">
+        <h3 class="card-title"><span class="dot"></span><span>食材剖面拆解视图</span>
+          <span class="tag" style="margin-left:auto">营养数值取自官方整品数据</span></h3>
+        <div class="art-stage">
+          <svg class="art" viewBox="0 0 560 430" aria-hidden="true" focusable="false">
+            <defs>
+              <linearGradient id="ly1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="rgba(255,199,44,.26)"/><stop offset="100%" stop-color="rgba(255,199,44,.05)"/></linearGradient>
+              <linearGradient id="ly2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="rgba(127,216,255,.24)"/><stop offset="100%" stop-color="rgba(127,216,255,.04)"/></linearGradient>
+              <linearGradient id="ly3" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="rgba(43,157,255,.30)"/><stop offset="100%" stop-color="rgba(43,157,255,.05)"/></linearGradient>
+              <linearGradient id="out" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7fd8ff"/><stop offset="100%" stop-color="#2b9dff"/></linearGradient>
+              <radialGradient id="sh" cx="50%" cy="50%"><stop offset="0%" stop-color="rgba(43,157,255,.22)"/><stop offset="100%" stop-color="rgba(43,157,255,0)"/></radialGradient>
+            </defs>
+            <ellipse cx="280" cy="215" rx="215" ry="170" fill="url(#sh)"/>
+
+            <!-- 等轴测剖面：四层 -->
+            <g stroke="url(#out)" stroke-width="1.2">
+              <path d="M170 118 L280 60 L390 118 L280 176 Z" fill="url(#ly1)"/>
+              <path d="M170 118 L170 152 A110 0 0 0 390 152 L390 118" fill="url(#ly1)" opacity=".8"/>
+              <path d="M170 152 L280 210 L390 152 L390 186 L280 244 L170 186 Z" fill="url(#ly2)"/>
+              <path d="M170 186 L280 244 L390 186 L390 226 L280 284 L170 226 Z" fill="url(#ly3)"/>
+              <path d="M170 226 L280 284 L390 226 L390 256 L280 314 L170 256 Z" fill="url(#ly1)" opacity=".7"/>
+            </g>
+
+            <!-- 层标签 -->
+            <g font-size="11.5" fill="#8ba3ba" style="font-family:var(--font)">
+              <text x="404" y="120">顶层 · 面包顶穹</text>
+              <text x="404" y="192">夹层 · 酱料 / 蔬菜</text>
+              <text x="404" y="232">核心 · 主料（肉/鱼/鸡）</text>
+              <text x="404" y="272">底层 · 面包底</text>
+            </g>
+
+            <!-- 数据节点：真实官方数值（与右侧面板重复，对读屏隐藏） -->
+            <g font-family="monospace" font-size="11.5">
+              <g class="node-chip" style="animation-delay:.05s">
+                <rect x="6" y="70" width="128" height="44" rx="10" fill="rgba(6,10,16,.86)" stroke="rgba(255,199,44,.55)"/>
+                <text x="18" y="90" fill="#ffc72c" id="nKcal">—</text><text x="18" y="105" fill="#5f7691" font-size="10">能量 ENERGY</text>
+              </g>
+              <g class="node-chip" style="animation-delay:.15s">
+                <rect x="6" y="146" width="128" height="44" rx="10" fill="rgba(6,10,16,.86)" stroke="rgba(124,208,255,.45)"/>
+                <text x="18" y="166" fill="#7fd8ff" id="nProtein">—</text><text x="18" y="181" fill="#5f7691" font-size="10">蛋白 PROTEIN</text>
+              </g>
+              <g class="node-chip" style="animation-delay:.25s">
+                <rect x="6" y="222" width="128" height="44" rx="10" fill="rgba(6,10,16,.86)" stroke="rgba(124,208,255,.45)"/>
+                <text x="18" y="242" fill="#7fd8ff" id="nFat">—</text><text x="18" y="257" fill="#5f7691" font-size="10">脂肪 FAT</text>
+              </g>
+              <g class="node-chip" style="animation-delay:.35s">
+                <rect x="6" y="298" width="128" height="44" rx="10" fill="rgba(6,10,16,.86)" stroke="rgba(124,208,255,.45)"/>
+                <text x="18" y="318" fill="#7fd8ff" id="nCarb">—</text><text x="18" y="333" fill="#5f7691" font-size="10">碳水 CARB</text>
+              </g>
+            </g>
+            <g class="flowline" stroke="#7fd8ff" stroke-width=".9" opacity=".6" fill="none">
+              <path d="M134 92 C 168 92, 186 104, 202 120"/>
+              <path d="M134 168 C 176 168, 196 178, 212 190"/>
+              <path d="M134 244 C 180 240, 202 234, 218 228"/>
+              <path d="M134 320 C 184 312, 204 292, 220 280"/>
+            </g>
+          </svg>
+        </div>
+        <p class="mt-8 hint-2">
+          说明：剖面层级为视觉示意结构；节点数值全部来自官方 <span class="mono">list-nutrition-foods</span> 的整品营养数据，
+          官方接口未提供逐层食材拆分数据，本页不做任何分层估算。
+        </p>
+      </div>
+      <div class="holo flat mt-16" id="comboBox" hidden>
+        <h3 class="card-title"><span class="dot"></span><span>套餐组成（query-meal-detail）</span></h3>
+        <div id="comboList"></div>
+      </div>
+
+      <!-- 横向条形对比图：当前值 vs 参考值（填充左列留白，风格对齐右侧占比条） -->
+      <div class="holo flat mt-16">
+        <h3 class="card-title"><span class="dot"></span><span>营养对比图 · 当前值 vs 参考值</span>
+          <select id="cmpSel" class="cmp-sel" aria-label="切换对比餐品"></select></h3>
+        <div class="cmp-chart" id="cmpChart" role="img" aria-label="六项营养指标与单人单餐参考值的横向条形对比图"></div>
+        <p class="mt-8 hint-2">
+          浅蓝条 = 未超过参考值；橙色条 = 超过参考值；虚线 = 参考值基准线（每行轨道满刻度为参考值的 130%）。
+          悬浮条形查看指标名称、当前数值、参考值与占比。切换对比餐品时条形平滑过渡。
+        </p>
+      </div>
+    </div>
+
+    <!-- 右：营养面板 -->
+    <div>
+      <div class="holo flat">
+        <h3 class="card-title"><span class="dot"></span><span>官方营养数据</span>
+          <span class="tag gold" id="matchTag" style="margin-left:auto">—</span></h3>
+        <div id="ringBox" class="center-flex" role="img" aria-label="占单人单餐参考热量的比例"></div>
+        <div class="metrics mt-16" id="nutMetrics"></div>
+      </div>
+
+      <div class="holo flat mt-16">
+        <h3 class="card-title"><span class="dot"></span><span>相对参考值占比</span>
+          <span class="tag" style="margin-left:auto">单人单餐参考</span></h3>
+        <div class="layer-stack" id="bars"></div>
+        <p class="mt-8 hint-2">
+          参考值：热量 840kcal / 蛋白 22g / 脂肪 25g / 碳水 120g / 钠 800mg / 钙 260mg（仅作展示基准，非医学建议）
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-head"><h2>同类对比</h2><span class="sub">同一门店在售、且有官方营养数据的餐品</span></div>
+  <div class="meal-grid" id="peers"></div>
+</div>
+</main>
+
+<footer class="foot" id="foot">
+  <div class="wrap"><div class="in">
+    <div class="muted">数据来源：麦当劳官方 MCP 接口（营养 / 菜单 / 门店 / 价格）</div>
+    <div class="disclaimer"><b>以上数据来自麦当劳官方MCP接口，仅供点餐参考</b><br />本工具不做任何医疗、健康或治疗类诊断。</div>
+  </div></div>
+</footer>
+
+<script defer src="assets/js/data-embed.js"></script>
+<script defer src="assets/js/details-embed.js" onerror="window.__noDetails=1"></script>
+<script defer src="assets/js/core.js"></script>
+<script defer src="assets/js/detail.js"></script>
+</body>
+</html>

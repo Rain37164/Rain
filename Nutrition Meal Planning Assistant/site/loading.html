@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="正在按目标热量求解麦当劳套餐组合。" />
+<meta name="theme-color" content="#06090e" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ffc72c'/%3E%3Ctext x='16' y='23' font-size='19' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%2322180a'%3EM%3C/text%3E%3C/svg%3E" />
+<title>AI 正在生成配餐方案… | 麦当劳 MCP</title>
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主内容</a>
+
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <div class="brand"><span class="logo">M</span><span>营养配餐助手<small>MCDONALD'S NUTRITION MCP</small></span></div>
+    <nav class="nav-links">
+      <a href="index.html">配餐工作台</a>
+      <a href="results.html">配餐结果</a>
+      <a href="detail.html">单品详情</a>
+      <a href="dashboard.html">营养仪表盘</a>
+      <a href="loading.html" class="on">AI 生成</a>
+      <a href="guide.html">接入说明</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<div class="wrap">
+  <noscript>
+    <div class="holo flat mt-16">当前浏览器已禁用 JavaScript，无法执行配餐求解，请返回工作台或开启脚本后重试。</div>
+  </noscript>
+
+  <div class="loading-stage">
+    <div>
+      <div class="wire-box">
+        <svg viewBox="0 0 300 300" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="hl" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#7fd8ff"/>
+              <stop offset="100%" stop-color="#2b9dff"/>
+            </linearGradient>
+            <radialGradient id="hglow" cx="50%" cy="55%">
+              <stop offset="0%" stop-color="rgba(127,216,255,.26)"/>
+              <stop offset="100%" stop-color="rgba(127,216,255,0)"/>
+            </radialGradient>
+          </defs>
+          <circle cx="150" cy="150" r="132" fill="url(#hglow)"/>
+          <!-- 全息线框套餐轮廓 -->
+          <g fill="none" stroke="url(#hl)" stroke-width="1.3" opacity=".55">
+            <path d="M150 34 L252 92 L150 150 L48 92 Z"/>
+            <path d="M48 92 L48 136 L150 194 L252 136 L252 92"/>
+            <path d="M150 150 L150 194"/>
+            <ellipse cx="150" cy="86" rx="66" ry="33"/>
+            <ellipse cx="150" cy="112" rx="72" ry="36"/>
+            <ellipse cx="150" cy="136" rx="62" ry="31"/>
+            <circle cx="150" cy="236" r="26"/>
+            <path d="M124 236 L124 244 A26 26 0 0 0 176 244 L176 236"/>
+          </g>
+          <!-- 流动光带 -->
+          <g fill="none" stroke="#7fd8ff" stroke-width="2.2" stroke-linecap="round">
+            <path class="trace" d="M150 34 L252 92 L150 150 L48 92 Z"/>
+            <path class="trace" d="M48 92 L48 136 L150 194 L252 136 L252 92" style="animation-delay:.6s"/>
+            <path class="trace" d="M124 236 A26 26 0 0 1 176 236" style="animation-delay:1.1s"/>
+          </g>
+          <!-- 悬浮营养节点（装饰，对读屏隐藏） -->
+          <g font-family="monospace" font-size="10" fill="#7fd8ff">
+            <g class="node-chip" style="animation-delay:.2s"><rect x="6" y="58" width="80" height="24" rx="7" fill="rgba(6,10,16,.85)" stroke="rgba(124,208,255,.4)"/><text x="16" y="74">kcal 求解</text></g>
+            <g class="node-chip" style="animation-delay:.5s"><rect x="214" y="52" width="80" height="24" rx="7" fill="rgba(6,10,16,.85)" stroke="rgba(124,208,255,.4)"/><text x="224" y="68">蛋白 ≥ 目</text></g>
+            <g class="node-chip" style="animation-delay:.8s"><rect x="4" y="176" width="80" height="24" rx="7" fill="rgba(6,10,16,.85)" stroke="rgba(255,199,44,.5)"/><text x="14" y="192" fill="#ffc72c">±100 kcal</text></g>
+            <g class="node-chip" style="animation-delay:1.1s"><rect x="216" y="184" width="80" height="24" rx="7" fill="rgba(6,10,16,.85)" stroke="rgba(124,208,255,.4)"/><text x="226" y="200">组合遍历</text></g>
+          </g>
+        </svg>
+      </div>
+
+      <span class="eyebrow">AI NUTRITION SOLVING</span>
+      <h1 class="stage-h1">正在生成配餐方案</h1>
+      <p id="stepText" class="stage-step" role="status" aria-live="polite">初始化求解器…</p>
+
+      <div class="progress-track" role="progressbar" aria-labelledby="stepText" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="track">
+        <i id="bar"></i>
+      </div>
+      <p class="mono pct-label" id="pct">0%</p>
+
+      <div class="metrics narrow mt-24" id="liveMetrics"></div>
+    </div>
+  </div>
+</div>
+</main>
+
+<footer class="foot" id="foot">
+  <div class="wrap"><div class="in">
+    <div class="muted">数据来源：麦当劳官方 MCP 接口（营养 / 菜单 / 门店 / 价格）</div>
+    <div class="disclaimer"><b>以上数据来自麦当劳官方MCP接口，仅供点餐参考</b><br />本工具不做任何医疗、健康或治疗类诊断。</div>
+  </div></div>
+</footer>
+
+<script defer src="assets/js/data-embed.js"></script>
+<script defer src="assets/js/core.js"></script>
+<script defer src="assets/js/loading.js"></script>
+</body>
+</html>

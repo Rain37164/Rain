@@ -1,0 +1,20 @@
+{
+  "_comment": "麦当劳中国官方 MCP Server 配置示例。复制为 ~/.workbuddy/mcp.json（或你的 MCP 客户端配置文件），把 YOUR_MCP_TOKEN 替换为在 open.mcd.cn 控制台激活得到的 Token。切勿把真实 Token 提交到版本库。",
+  "mcpServers": {
+    "mcd-mcp": {
+      "type": "streamablehttp",
+      "url": "https://mcp.mcd.cn",
+      "headers": {
+        "Authorization": "Bearer YOUR_MCP_TOKEN"
+      }
+    }
+  },
+  "_notes": {
+    "endpoint": "根路径 https://mcp.mcd.cn；使用 /mcp 会返回 404",
+    "protocol": "Streamable HTTP，MCP 2025-06-18",
+    "rateLimit": "600 次 / 分钟；429 需降低频率后重试",
+    "401": "Token 无效或过期，需重新申请",
+    "enable": "在连接器管理页对新出现的自定义服务点「信任」后，工具才会出现在工具列表",
+    "toolsCount": "tools/list 实际返回 35 个工具（官方文档 33 个 + 未文档化的 query-promotions、query-survey-coupon）"
+  }
+}

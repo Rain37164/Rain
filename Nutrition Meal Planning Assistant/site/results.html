@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="按目标热量、配餐方向与忌口条件求解出的麦当劳套餐方案列表，含热量、蛋白、脂肪、碳水、钠与参考总价。" />
+<meta name="theme-color" content="#06090e" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ffc72c'/%3E%3Ctext x='16' y='23' font-size='19' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%2322180a'%3EM%3C/text%3E%3C/svg%3E" />
+<title>配餐结果 | 麦当劳营养配餐助手</title>
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主内容</a>
+
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <div class="brand"><span class="logo">M</span><span>营养配餐助手<small>MCDONALD'S NUTRITION MCP</small></span></div>
+    <nav class="nav-links">
+      <a href="index.html">配餐工作台</a>
+      <a href="results.html" class="on">配餐结果</a>
+      <a href="detail.html">单品详情</a>
+      <a href="dashboard.html">营养仪表盘</a>
+      <a href="loading.html">AI 生成</a>
+      <a href="guide.html">接入说明</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<div class="wrap">
+  <noscript>
+    <div class="holo flat mt-16">当前浏览器已禁用 JavaScript，无法求解套餐方案，请返回工作台或开启脚本后重试。</div>
+  </noscript>
+
+  <div class="page-head">
+    <span class="eyebrow">SOLVED PLANS · ±100 KCAL</span>
+    <h1>最优推荐套餐</h1>
+    <p id="condLine">—</p>
+    <div class="row mt-8">
+      <a class="btn btn-ghost" href="index.html">← 返回工作台调整条件</a>
+      <a class="btn btn-ghost" href="dashboard.html">营养仪表盘</a>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <h2>方案列表</h2>
+    <span class="sub" id="planCount">—</span>
+  </div>
+  <p class="mt-8 hint">
+    热量口径：全部取麦当劳官方营养表标注值，不做任何估算或人为修正；组合加总与单品官方标注之间出现的
+    ±3 kcal 级差异属于食品标签常规误差，不影响是否在 ±100 kcal 容差内的判定。
+  </p>
+
+  <div id="plans" class="stack mt-16">
+    <div class="empty">求解中…</div>
+  </div>
+
+  <div class="section-head"><h2>全部可求解餐品</h2><span class="sub" id="catCount">—</span></div>
+  <div class="holo flat">
+    <div class="scroll-x">
+      <table class="data" id="catTable">
+        <caption class="sr-only">门店在售且具有官方营养数据的餐品清单，按热量从高到低排列</caption>
+        <thead>
+          <tr>
+            <th scope="col">餐品</th><th scope="col">菜单编码</th><th scope="col" class="num">热量 kcal</th><th scope="col" class="num">蛋白 g</th>
+            <th scope="col" class="num">脂肪 g</th><th scope="col" class="num">碳水 g</th><th scope="col" class="num">钠 mg</th><th scope="col" class="num">价格</th><th scope="col">营养来源</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</main>
+
+<footer class="foot" id="foot">
+  <div class="wrap"><div class="in">
+    <div class="muted">数据来源：麦当劳官方 MCP 接口（营养 / 菜单 / 门店 / 价格）</div>
+    <div class="disclaimer"><b>以上数据来自麦当劳官方MCP接口，仅供点餐参考</b><br />本工具不做任何医疗、健康或治疗类诊断。</div>
+  </div></div>
+</footer>
+
+<script defer src="assets/js/data-embed.js"></script>
+<script defer src="assets/js/core.js"></script>
+<script defer src="assets/js/results.js"></script>
+</body>
+</html>

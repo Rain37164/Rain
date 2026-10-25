@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="营养配餐助手如何基于麦当劳中国官方 MCP Server 构建：申请 Token、Streamable HTTP 接入配置、七步调用流程、数据口径与工程约束。" />
+<meta name="theme-color" content="#06090e" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ffc72c'/%3E%3Ctext x='16' y='23' font-size='19' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%2322180a'%3EM%3C/text%3E%3C/svg%3E" />
+<title>接入说明 | 麦当劳营养配餐助手</title>
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主内容</a>
+
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <div class="brand"><span class="logo">M</span><span>营养配餐助手<small>MCDONALD'S NUTRITION MCP</small></span></div>
+    <nav class="nav-links">
+      <a href="index.html">配餐工作台</a>
+      <a href="results.html">配餐结果</a>
+      <a href="detail.html">单品详情</a>
+      <a href="dashboard.html">营养仪表盘</a>
+      <a href="loading.html">AI 生成</a>
+      <a href="guide.html" class="on">接入说明</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<div class="wrap">
+  <noscript>
+    <div class="holo flat mt-16">当前浏览器已禁用 JavaScript，页面中的实时数据条数无法显示，其余说明内容不受影响。</div>
+  </noscript>
+
+  <div class="page-head">
+    <span class="eyebrow">DEVELOPER GUIDE · MCP 2025-06-18</span>
+    <h1>接入说明</h1>
+    <p class="lead">
+      本页面说明营养配餐助手如何基于麦当劳中国官方 MCP Server 构建。
+      所有餐品、价格、门店、营养数据均来自官方接口，本站不存储任何硬编码营养值。
+    </p>
+  </div>
+
+  <!-- 横向流程时间轴 -->
+  <div class="section-head"><h2>配餐调用流程</h2><span class="sub">7 步 · 全部为官方工具</span></div>
+
+  <div class="holo flat flow-scroll scroll-x">
+    <svg viewBox="0 0 1240 190" style="min-width:1080px;width:100%" role="img"
+         aria-label="配餐调用流程：now-time-info 确定时段 → query-nearby-stores 取门店 → query-meals 取在售菜单与价格 → list-nutrition-foods 取全量营养 → 名称对齐与组合求解（±100 kcal）→ query-store-coupons 取优惠券 → calculate-price 官方算价复核">
+      <defs>
+        <linearGradient id="tl" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#2b9dff"/><stop offset="55%" stop-color="#7fd8ff"/><stop offset="100%" stop-color="#ffc72c"/>
+        </linearGradient>
+      </defs>
+      <line x1="40" y1="96" x2="1200" y2="96" stroke="url(#tl)" stroke-width="2" opacity=".75"/>
+      <line class="trace" x1="40" y1="96" x2="1200" y2="96" stroke="#ffc72c" stroke-width="2.6" opacity=".85"/>
+      <g>
+        <g><circle cx="90" cy="96" r="9" fill="#06090e" stroke="#7fd8ff" stroke-width="2"/><text x="90" y="60" text-anchor="middle" font-size="11.5" fill="#e9f3fc">now-time-info</text><text x="90" y="132" text-anchor="middle" font-size="10" fill="#5f7691">确定时段</text></g>
+        <g><circle cx="260" cy="96" r="9" fill="#06090e" stroke="#7fd8ff" stroke-width="2"/><text x="260" y="60" text-anchor="middle" font-size="11.5" fill="#e9f3fc">query-nearby-stores</text><text x="260" y="132" text-anchor="middle" font-size="10" fill="#5f7691">门店 / storeCode</text></g>
+        <g><circle cx="430" cy="96" r="9" fill="#06090e" stroke="#7fd8ff" stroke-width="2"/><text x="430" y="60" text-anchor="middle" font-size="11.5" fill="#e9f3fc">query-meals</text><text x="430" y="132" text-anchor="middle" font-size="10" fill="#5f7691">在售菜单 + 价格</text></g>
+        <g><circle cx="600" cy="96" r="9" fill="#06090e" stroke="#7fd8ff" stroke-width="2"/><text x="600" y="60" text-anchor="middle" font-size="11.5" fill="#e9f3fc">list-nutrition-foods</text><text x="600" y="132" text-anchor="middle" font-size="10" fill="#5f7691">全量营养（TOON）</text></g>
+        <g><circle cx="770" cy="96" r="11" fill="#ffc72c" stroke="#ffc72c" stroke-width="2"/><text x="770" y="60" text-anchor="middle" font-size="11.5" fill="#ffc72c">名称对齐 + 组合求解</text><text x="770" y="132" text-anchor="middle" font-size="10" fill="#ffc72c">±100 kcal</text></g>
+        <g><circle cx="940" cy="96" r="9" fill="#06090e" stroke="#7fd8ff" stroke-width="2"/><text x="940" y="60" text-anchor="middle" font-size="11.5" fill="#e9f3fc">query-store-coupons</text><text x="940" y="132" text-anchor="middle" font-size="10" fill="#5f7691">门店优惠券</text></g>
+        <g><circle cx="1110" cy="96" r="9" fill="#06090e" stroke="#7fd8ff" stroke-width="2"/><text x="1110" y="60" text-anchor="middle" font-size="11.5" fill="#e9f3fc">calculate-price</text><text x="1110" y="132" text-anchor="middle" font-size="10" fill="#5f7691">官方算价复核</text></g>
+      </g>
+    </svg>
+  </div>
+
+  <div class="grid-2 mt-32">
+    <div class="holo flat">
+      <h3 class="card-title"><span class="dot"></span><span>01 · 申请 MCP Token</span></h3>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="holo flat sub-card"><h4>登录开放平台</h4><p>访问 open.mcd.cn，点击右上角「登录」，使用手机号验证码登录。</p></div>
+        </div>
+        <div class="tl-item">
+          <div class="holo flat sub-card"><h4>进入控制台</h4><p>登录成功后，右上角「登录」变为「控制台」。</p></div>
+        </div>
+        <div class="tl-item now">
+          <div class="holo flat sub-card"><h4>激活并复制 Token</h4><p>点击「激活」申请 MCP Token，同意服务协议后即可一键复制。</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="holo flat">
+      <h3 class="card-title"><span class="dot"></span><span>02 · 接入配置</span></h3>
+      <p>服务器接入地址 <span class="mono hl-ice">https://mcp.mcd.cn</span>，使用 <b class="hl-text">Streamable HTTP</b> 协议，请求头携带 Bearer Token。</p>
+      <pre class="mono code-block">{
+  "mcpServers": {
+    "mcd-mcp": {
+      "type": "streamablehttp",
+      "url": "https://mcp.mcd.cn",
+      "headers": {
+        "Authorization": "Bearer YOUR_MCP_TOKEN"
+      }
+    }
+  }
+}</pre>
+      <div class="metrics mt-16">
+        <div class="metric"><div class="k">限流</div><div class="v">600<span class="u">次/分</span></div></div>
+        <div class="metric"><div class="k">401</div><div class="v sm">Token 无效/过期</div></div>
+        <div class="metric"><div class="k">429</div><div class="v sm">触发限流</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="holo flat mt-24">
+    <h3 class="card-title"><span class="dot"></span><span>03 · 数据口径与工程约束（评审要点）</span></h3>
+    <div class="grid-2">
+      <div>
+        <h4 class="hl-ice">数据来源</h4>
+        <ul class="bullets">
+          <li>站点营养值来自 <span class="mono">list-nutrition-foods</span> 快照，共 <b class="hl-y" id="nCount">—</b> 条。</li>
+          <li>菜单与价格来自 <span class="mono">query-meals</span>，共 <b class="hl-y" id="mCount">—</b> 款在售餐品。</li>
+          <li>门店来自 <span class="mono">query-nearby-stores</span>，共 <b class="hl-y" id="sCount">—</b> 家。</li>
+          <li>套餐组成来自 <span class="mono">query-meal-detail</span>，共 <b class="hl-y" id="dCount">—</b> 款。</li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="hl-y">关键约束</h4>
+        <ul class="bullets">
+          <li><b class="hl-text">组合餐不做营养近似</b>：营养表只收录单品，套餐类餐品不参与热量计算，避免低估。</li>
+          <li><b class="hl-text">规格差异会标注</b>：如「可乐 → 可乐中杯」，界面显示实际营养来源。</li>
+          <li>金额单位：菜单为<b class="hl-text">元</b>，<span class="mono">calculate-price</span> 返回<b class="hl-text">分</b>，展示前统一换算。</li>
+          <li>下单需 <span class="mono">productCode</span>（菜单字段名为 <span class="mono">code</span>，需改名，否则静默返回 0）。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-head"><h2>官方版本日志</h2><span class="sub">来源：open.mcd.cn/mcp/doc</span></div>
+  <div class="holo flat scroll-x">
+    <table class="data">
+      <caption class="sr-only">麦当劳 MCP Server 官方版本日志，按日期倒序</caption>
+      <thead><tr><th scope="col">日期</th><th scope="col">版本</th><th scope="col">更新内容</th></tr></thead>
+      <tbody id="verBody"></tbody>
+    </table>
+  </div>
+
+  <div class="holo flat mt-24">
+    <h3 class="card-title"><span class="dot"></span><span>使用边界</span></h3>
+    <p>
+      本工具为麦当劳 MCP 开发者大赛参赛作品，非麦当劳官方产品。所有推荐方案仅为智能参考，<b class="hl-y">不代表可下单履约</b>；
+      实际价格、库存、优惠以麦当劳官方 App / 门店为准。营养信息仅作饮食参考，本工具不提供任何医疗、健康或治疗类诊断建议。
+    </p>
+  </div>
+</div>
+</main>
+
+<footer class="foot" id="foot">
+  <div class="wrap"><div class="in">
+    <div class="muted">数据来源：麦当劳官方 MCP 接口（营养 / 菜单 / 门店 / 价格）</div>
+    <div class="disclaimer"><b>以上数据来自麦当劳官方MCP接口，仅供点餐参考</b><br />本工具不做任何医疗、健康或治疗类诊断。</div>
+  </div></div>
+</footer>
+
+<script defer src="assets/js/data-embed.js"></script>
+<script defer src="assets/js/details-embed.js" onerror="window.__noDetails=1"></script>
+<script defer src="assets/js/core.js"></script>
+<script defer src="assets/js/guide.js"></script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="门店在售餐品的官方营养数据总览：热量分布、宏量营养素雷达、营养缺口与超标提示、品类营养均值与高热餐品排行。" />
+<meta name="theme-color" content="#06090e" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23ffc72c'/%3E%3Ctext x='16' y='23' font-size='19' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%2322180a'%3EM%3C/text%3E%3C/svg%3E" />
+<title>营养数据仪表盘 | 麦当劳营养配餐助手</title>
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+<a class="skip-link" href="#main">跳到主内容</a>
+
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <div class="brand"><span class="logo">M</span><span>营养配餐助手<small>MCDONALD'S NUTRITION MCP</small></span></div>
+    <nav class="nav-links">
+      <a href="index.html">配餐工作台</a>
+      <a href="results.html">配餐结果</a>
+      <a href="detail.html">单品详情</a>
+      <a href="dashboard.html" class="on">营养仪表盘</a>
+      <a href="loading.html">AI 生成</a>
+      <a href="guide.html">接入说明</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<div class="wrap">
+  <noscript>
+    <div class="holo flat mt-16">当前浏览器已禁用 JavaScript，无法加载营养数据看板，请开启脚本后重试。</div>
+  </noscript>
+
+  <div class="page-head">
+    <span class="eyebrow">NUTRITION DASHBOARD · OFFICIAL DATA</span>
+    <h1>营养数据仪表盘</h1>
+    <p id="condLine">—</p>
+  </div>
+
+  <div class="metrics mt-24" id="topMetrics"></div>
+
+  <div class="grid-2 mt-24">
+    <div class="holo flat">
+      <h3 class="card-title"><span class="dot"></span><span>目标热量达成</span>
+        <span class="tag gold" id="ringTag" style="margin-left:auto">—</span></h3>
+      <div id="bigRing" class="center-flex" role="img" aria-label="目标热量达成环形图"></div>
+      <p class="mt-16" id="ringNote">—</p>
+    </div>
+
+    <div class="holo flat">
+      <h3 class="card-title"><span class="dot"></span><span>宏量营养素雷达</span>
+        <span class="tag" style="margin-left:auto">占每日推荐 %</span></h3>
+      <div id="bigRadar" role="img" aria-label="宏量营养素雷达图"></div>
+      <div class="radar-note">
+        <p><span class="rn-k">顶点含义</span>占每日推荐摄入量的百分比</p>
+        <p><span class="rn-k">每日推荐基准</span>热量 2000 kcal ／ 蛋白 60 g ／ 脂肪 60 g ／ 碳水 250 g ／ 钠 2000 mg</p>
+        <p><span class="rn-k">网格说明</span>同心圆为背景网格（辅助刻度），红色虚线五边形为 100% 每日推荐预警边界；指标超过 100% 时，顶点和连线标红预警。鼠标悬浮顶点，弹出该营养项详细信息。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="holo flat mt-24">
+    <h3 class="card-title"><span class="dot"></span><span>门店可配餐餐品热量分布</span>
+      <span class="tag" style="margin-left:auto" id="distTag">—</span></h3>
+    <div id="distScatter" role="img" aria-label="门店可配餐餐品热量分布散点图"></div>
+    <p class="mt-16 hint">
+      说明：本图为本门店在售、带有官方营养数据的单品，按热量升序排列；黄点标记最接近目标热量的单品。
+    </p>
+  </div>
+
+  <div class="grid-2 mt-24">
+    <div class="holo flat">
+      <h3 class="card-title"><span class="dot"></span><span>营养缺口 / 超标提示</span></h3>
+      <div class="layer-stack" id="gaps"></div>
+      <p class="mt-8 hint-2">
+        以当前最优方案对比参考值计算；仅作饮食参考，不构成任何健康或医疗建议。
+      </p>
+    </div>
+
+    <div class="holo flat">
+      <h3 class="card-title"><span class="dot"></span><span>品类营养均值</span>
+        <span class="tag" style="margin-left:auto">按门店菜单分类聚合</span></h3>
+      <div class="scroll-y">
+        <table class="data" id="catTable">
+          <caption class="sr-only">按门店菜单分类聚合的营养均值：款数、平均热量、平均蛋白质、平均钠</caption>
+          <thead><tr>
+            <th scope="col">分类</th><th scope="col" class="num">款数</th><th scope="col" class="num">均热量 kcal</th>
+            <th scope="col" class="num">均蛋白质 g</th><th scope="col" class="num">均钠 mg</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-head"><h2>高热餐品 TOP 8</h2><span class="sub">需注意总摄入时可优先避开</span></div>
+  <div class="meal-grid" id="topMeals"></div>
+</div>
+</main>
+
+<footer class="foot" id="foot">
+  <div class="wrap"><div class="in">
+    <div class="muted">数据来源：麦当劳官方 MCP 接口（营养 / 菜单 / 门店 / 价格）</div>
+    <div class="disclaimer"><b>以上数据来自麦当劳官方MCP接口，仅供点餐参考</b><br />本工具不做任何医疗、健康或治疗类诊断。</div>
+  </div></div>
+</footer>
+
+<script defer src="assets/js/data-embed.js"></script>
+<script defer src="assets/js/core.js"></script>
+<script defer src="assets/js/dashboard.js"></script>
+</body>
+</html>
